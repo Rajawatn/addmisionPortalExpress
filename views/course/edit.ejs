@@ -1,0 +1,63 @@
+<%- include('../header.ejs') %> <br><br>
+
+    <h1 class="text-center mt-5 pt-5">course Edit</h1>
+
+    <br><br>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 bg-body">
+                <form action="/course_update/<%= d._id%>" method="post">
+
+
+                    <div>
+                        <label for="">name</label>
+                        <input type="text" name="name" value="<%= d.name %>" class="form-control">
+                    </div>
+                    <div>
+                        <label for="">email</label>
+                        <input type="text" name="email" value="<%= d.email %>" class="form-control">
+                    </div>
+                    <div>
+                        <label for="">Phone</label>
+                        <input type="number" name="phone" value="<%= d.phone %>" class="form-control">
+                    </div>
+                    <div>
+                        <label for="">D.O.B</label>
+                        <input type="date" name="dob" value="<%= d.dob %>" class="form-control">
+                    </div>
+                    <div>
+                        <select name="education" value="<%= d.education %>" class="form-control">
+                            <option>Select collage</option>
+                            <option value="10th">10th</option>
+                            <option value="12th">12th</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="">Course</label>
+                        <input type="text" name="course" value="btech" readonly class="form-control" />
+                    </div>
+                    <div>
+                        <label for="">gender</label>
+                        <input type="radio" name="gender" value="male">Male
+                        <input type="radio" name="gender" value="female">Female
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Address</label>
+                        <textarea name="address" class="form-control"><%= d.address %></textarea>
+                    </div>
+
+                    <div>
+                        <button class="btn  btn-info" type="submit" class="btn-primary">update</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md4"></div>
+
+
+        </div>
+    </div>
+
+    <%- include('../footer.ejs') %>

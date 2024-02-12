@@ -1,0 +1,65 @@
+<%- include('../header.ejs')%>
+    <div class="container mt-5">
+        <h1 class="text-center pt-5">course Display</h1>
+        <% if(msg.length> 0) { %>
+            <div class="alert alert-success">
+                <%=msg%>
+            </div>
+            <% } %>
+                <table class="table">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>status</th>
+                        <th>Comment</th>
+                        <th></th>
+                        <th>Action</th>
+
+
+                    </tr>
+                    <% i=1%>
+
+                        <% c.forEach((item)=>{%>
+                            <tr>
+                                <td>
+                                    <%=i++%>
+                                </td>
+                                <td>
+                                    <%=item.name%>
+                                </td>
+                                <td>
+                                    <%=item.course%>
+                                </td>
+                                <td class="table-info">
+                                    <%=item.status%>
+                                </td>
+                                <td>
+                                    <form action="/admin/update_status/<%= item.id%>" method="post">
+                                        <textarea name="comment" class="form-control"></textarea>
+                                        <input type="hidden" name="name" value="<%=item.name%>">
+                                        <input type="hidden" name="email" value="<%=item.email%>">
+
+                                </td>
+                                <td>
+                                    <button type="submit" name="status" class="btn btn-info"
+                                        value="approved">Approved</button>
+                                    <button type="submit" name="status" class="btn btn-danger"
+                                        value="reject">Reject</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a href="/course_view/<%=item._id%>" class="btn btn-info"><i
+                                            class="fa-solid fa-eye"></i></a>
+                                    <a href="/course_edit/<%=item._id%>" class="btn btn-success"><i
+                                            class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="/course_delete/<%=item._id%>" class="btn btn-danger"><i
+                                            class="fa-solid fa-trash"></i></a>
+                                </td>
+
+                            </tr>
+                            <%})%>
+                </table>
+                <a href="/dashboard"><button class="btn btn-success">Back To Home</button></a>
+    </div>
+    <%- include('../footer.ejs')%>

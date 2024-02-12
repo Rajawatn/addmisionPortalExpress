@@ -1,0 +1,157 @@
+<%- include('./header.ejs')%>
+    <br><br><br><br>
+    <!-- <style>
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="card text-center">
+            <img src="<%=i.url%>" class="card-img-top profile-image mx-auto mt-3" alt="Profile Image">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <b>Name</b>
+                    <%=n%>
+                </h5>
+                <p>
+                    <b>Email</b>
+                    <%= e %>
+                </p>
+            </div>
+            <center>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileupdate">Update
+                        Profile
+                    </a>
+                    <br>
+                    <a href="#" class="btn btn-primary ms-4">Update Password
+                    </a>
+                </div>
+            </center>
+        </div>
+
+    </div> -->
+    <% if(msg.length> 0) { %>
+        <div class="alert alert-success">
+            <%=msg%>
+        </div>
+        <% } %>
+
+            <div class="d-flex " style="justify-content: center;">
+                <div class=" pt-3 card" style="width: 20rem; align-items: center; ">
+                    <div class="modal-header">
+                        <button style="margin-left: 279px;" type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+
+                    <img src="<%= i.url %>" alt="mdo" width="40" height="40" class="rounded-circle cover"
+                        style="height: 150px; width: 150px;">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <b>Name:</b>
+                            <%=n%>
+                        </h5>
+                        <p class="card-text">
+                            <b>Email</b>
+                            <%=e%>s
+                        </p>
+                    </div>
+                    <center>
+                        <div>
+                            <button class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#profileupdate">Update
+                                profile</button>
+
+                        </div>
+                        <br>
+                        <div>
+                            <button class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#passwordupdate">Update
+                                password</button>
+
+                        </div>
+                    </center>
+
+                </div>
+            </div>
+
+
+
+            <!-- Update profile -->
+            <div class="modal fade" id="profileupdate" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Profile Update</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- form start -->
+                            <form action="/profile_update" method="post" enctype="multipart/form-data">
+
+
+                                <div class="mb-3">
+                                    <label for="">name</label>
+                                    <input type="text" value="<%= n %>" name="name" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">email</label>
+                                    <input type="text" value="<%= e %>" name="email" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="profile-image">Profile image</label>
+                                    <input type="file" name="image" class="form-control-file" />
+                                    <img src="<%=i.url%>" alt="" width="80">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-primary">save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- //chang Password -->
+            <div class="modal fade" id="passwordupdate" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">password update</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- form start -->
+                            <form action="/changepassword" method="post">
+
+
+                                <div class="mb-3">
+                                    <label for="">old password</label>
+                                    <input type="password" name="op" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">new password</label>
+                                    <input type="password" name="np" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">confirm password</label>
+                                    <input type="password" name="cp" class="form-control">
+                                </div>
+
+                                <div>
+                                    <button type="submit" class="btn btn-primary">change password</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <%- include('./footer.ejs')%>
