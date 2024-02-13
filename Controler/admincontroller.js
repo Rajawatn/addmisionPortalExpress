@@ -36,8 +36,8 @@ class AdminController {
             port: 587,
 
             auth: {
-                user: "rajawatnikhil@gmail.com",
-                pass: "tourarttekzvwvf",
+                user: "rajawatnikhil0@gmail.com",
+                pass: "miiwzkejudgwbfui",
             },
         });
         let info = await transporter.sendMail({

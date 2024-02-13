@@ -10,7 +10,6 @@ route.get("/about", checkUserAuth, FrontController.about);
 route.get("/ragistration", FrontController.ragistration);
 route.get("/dashboard", checkUserAuth, FrontController.dashboard);
 route.get("/contact", checkUserAuth, FrontController.contact);
-
 //insertreg//
 
 route.get("/logout", FrontController.logout);
