@@ -18,6 +18,7 @@ route.post("/vlogin", FrontController.vlogin);
 route.get("/profile", checkUserAuth, FrontController.profile);
 route.post("/profile_update", checkUserAuth, FrontController.profileUpdate);
 route.post("/changepassword", checkUserAuth, FrontController.changeP);
+//route.post("/forgot", FrontController.Forgotload);
 //course controller
 route.post("/courseinsert", checkUserAuth, courseController.courseinsert);
 route.get("/course_display", checkUserAuth, courseController.courseDisplay);
