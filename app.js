@@ -31,7 +31,7 @@ app.set("view engine", "ejs");
 
 
 // html css link public//
-app.use(express.static('public'))
+app.use(express.static('Public'))
 
 
 // parse application/x-www-form-urlencoded  "to covert the data in object form"
