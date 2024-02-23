@@ -17,6 +17,14 @@ const Userschema = new mongoose.Schema({
         type: String,
         default: "user"
     },
+    is_varified: {
+        type: Number,
+        default: 0
+    },
+    token: {
+        type: String,
+        default: ''
+    },
     image: {
         public_id: {
             type: String,

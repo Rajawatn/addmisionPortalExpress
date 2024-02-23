@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt");
 const cloudinary = require('cloudinary').v2
 const CourseModel = require('../Models/course')
+const randomstring = require('randomstring')
+const nodemailer = require('nodemailer')
 
 cloudinary.config({
   cloud_name: 'dtsiv1iir',
@@ -63,6 +65,95 @@ class FrontController {
       console.log(error);
     }
   };
+
+  static forgotPassword = async (req, res) => {
+    try {
+
+      res.render('forget', { msg: req.flash('success'), err: req.flash('error') });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static forgetPasswordVerify = async (req, res) => {
+    try {
+      const { email } = req.body;
+      const userData = await UserModel.findOne({ email: email });
+      //console.log(userData)
+      if (userData) {
+        const randomString = randomstring.generate();
+        await UserModel.updateOne(
+          { email: email },
+          { $set: { token: randomString } }
+        );
+        this.sendEmail(userData.name, userData.email, randomString);
+        req.flash("success", "Plz Check Your mail to reset Your Password!");
+        res.redirect("/");
+      } else {
+        req.flash("error", "You are not a registered Email");
+        res.redirect("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  static sendEmail = async (name, email, token) => {
+    let transporter = await nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+
+      auth: {
+        user: "rajawatnikhil0@gmail.com",
+        pass: "miiwzkejudgwbfui",
+      },
+    });
+    let info = await transporter.sendMail({
+      from: "test@gmail.com", // sender address
+      to: email, // list of receivers
+      subject: "Reset Password", // Subject line
+      text: "heelo", // plain text body
+      html:
+        "<p>Hii " +
+        name +
+        ',Please click here to <a href="http://localhost:4000/reset-password?token=' +
+        token +
+        '">Reset</a>Your Password.',
+    });
+  };
+
+
+  static reset_Password = async (req, res) => {
+    console.log('hello')
+    // try {
+    //   const token = req.query.token;
+    //   const tokenData = await UserModel.findOne({ token: token });
+    //   if (tokenData) {
+    //     res.render("reset_password", { user_id: tokenData._id });
+    //   } else {
+    //     res.render("404");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+  static reset_Password1 = async (req, res) => {
+    try {
+      const { password, user_id } = req.body;
+      const newHashPassword = await bcrypt.hash(password, 10);
+      await UserModel.findByIdAndUpdate(user_id, {
+        password: newHashPassword,
+        token: "",
+      });
+      req.flash("success", "Reset Password Updated successfully ");
+      res.redirect("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   static profile = async (req, res) => {
     try {
       const { name, image, email } = req.userdata;

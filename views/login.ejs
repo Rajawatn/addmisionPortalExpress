@@ -82,10 +82,10 @@
                                         <center>
                                             <p class="text-uppercase fw-light">Don't have an account? &nbsp;<a
                                                     href="./ragistration">Register Now</a></p>
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                forgot password
-                                            </button>
+
+                                            <p class="text-uppercase fw-light">Do you forgot the password &nbsp;<a
+                                                    href="./forget">Forget Password</a></p>
+
                                         </center>
                     </form>
                 </div>
@@ -98,74 +98,6 @@
 
 
 
-
-        <!-- Button trigger modal -->
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">forgot mail</h5>
-                        <button type="btn btn-info" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="col-lg-6 bglogin p-4">
-                            <form action="/forgot" method="post">
-                                <!-- logo -->
-                                <center>
-                                    <img class="mb-4 rounded-circle" src="/Images/logo.jpeg" alt="logo" width="20%"
-                                        height="20%">
-                                </center>
-
-                                <!-- Heading (Login) -->
-                                <h1 class="mb-5 text-center">Login</h1>
-                                <% if(message.length> 0) { %>
-                                    <div class="alert alert-success">
-                                        <%= message %>
-                                    </div>
-                                    <% } %>
-                                        <% if(error.length> 0) { %>
-                                            <div class="alert alert-danger">
-                                                <%= error %>
-                                            </div>
-                                            <% } %>
-                                                <!-- Email -->
-                                                <div class="row mb-3">
-                                                    <div
-                                                        class="col-lg-2 text-center bg-secondary rounded text-light fw-light my-auto p-2">
-                                                        Email
-                                                    </div>
-                                                    <div class="col-lg-10">
-                                                        <input class="form-control" type="email"
-                                                            placeholder="name@example.com" name="e" required>
-                                                    </div>
-                                                </div>
-
-
-
-
-                                                <center>
-                                                    <button type="submit"
-                                                        class="btn btn-primary mb-5 btn-lg">send</button>
-                                                </center>
-
-                                                <!-- Register Now -->
-
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
 
