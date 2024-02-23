@@ -118,7 +118,7 @@ class FrontController {
       html:
         "<p>Hii " +
         name +
-        ',Please click here to <a href="http://localhost:4000/reset-password?token=' +
+        ',Please click here to <a href="http://localhost:4000/reset_password?token=' +
         token +
         '">Reset</a>Your Password.',
     });
@@ -126,18 +126,18 @@ class FrontController {
 
 
   static reset_Password = async (req, res) => {
-    console.log('hello')
-    // try {
-    //   const token = req.query.token;
-    //   const tokenData = await UserModel.findOne({ token: token });
-    //   if (tokenData) {
-    //     res.render("reset_password", { user_id: tokenData._id });
-    //   } else {
-    //     res.render("404");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    // console.log('hello')
+    try {
+      const token = req.query.token;
+      const tokenData = await UserModel.findOne({ token: token });
+      if (tokenData) {
+        res.render("reset_password", { user_id: tokenData._id });
+      } else {
+        res.render("404");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   static reset_Password1 = async (req, res) => {
     try {

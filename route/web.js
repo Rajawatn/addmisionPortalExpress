@@ -23,7 +23,7 @@ route.post("/profile_update", checkUserAuth, FrontController.profileUpdate);
 route.post("/changepassword", checkUserAuth, FrontController.changeP);
 route.get('/forget', FrontController.forgotPassword)
 route.post('/forgot_Password', FrontController.forgetPasswordVerify)
-route.get('/reset-password', FrontController.reset_Password)
+route.get('/reset_password', FrontController.reset_Password)
 route.post('/reset_Password1', FrontController.reset_Password1)
 //course controller
 route.post("/courseinsert", checkUserAuth, courseController.courseinsert);
