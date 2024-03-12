@@ -32,7 +32,7 @@ class FrontController {
   };
   static ragistration = async (req, res) => {
     try {
-      res.render("ragistration", { message: req.flash('error') });
+      res.render("ragistration", { message: req.flash('success'), error: req.flash('error') });
     } catch (error) {
       console.log(error);
     }
@@ -151,6 +151,99 @@ class FrontController {
       res.redirect("/");
     } catch (error) {
       console.log(error);
+    }
+  };
+
+
+  // static sendverifyEmail = async (name, email, user_id) => {
+  //   // console.log(name,email,status,comment)
+  //   // connenct with the smtp server
+
+  //   let transporter = await nodemailer.createTransport({
+  //     host: "smtp.gmail.com",
+  //     port: 587,
+
+  //     auth: {
+  //       user: "rajawatnikhil0@gmail.com",
+  //       pass: "miiwzkejudgwbfui",
+  //     },
+  //   });
+  //   let info = await transporter.sendMail({
+  //     from: "test@gmail.com", // sender address
+  //     to: email, // list of receivers
+  //     subject: `for varification email`, // Subject line
+  //     text: "heelo", // plain text body
+  //     html:
+  //       "<p>Hii " +
+  //       name +
+  //       ',Please click here to <a href="http://localhost:4000/verify?id=' +
+  //       user_id +
+  //       '">verify</a>Your email.',// html body
+  //   });
+  // }
+
+  // static verifyMail = async (req, res) => {
+  //   try {
+  //     const updateinfo = await UserModel.findByIdAndUpdate(req.query.id, {
+  //       is_varified: 1,
+  //     })
+  //     if (updateinfo) {
+  //       res.redirect("/dashboard");
+  //     }
+  //   } catch (error) {
+
+  //   }
+  // }
+
+
+
+  static sendverifyEmail = async (n, e, id) => {
+    console.log(n, e, id)
+    // connenct with the smtp server
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+
+      auth: {
+        user: "rajawatnikhil0@gmail.com",
+        pass: "ushxnskkerrwluhp",
+      },
+    });
+    const mailOptions = {
+      from: "rajawatnikhil0@gmail.com", // sender address
+      to: e, // list of receivers
+      subject: "Verify Email", // Subject line
+      text: "heelo", // plain text body
+      html:
+        "<p>Hii " +
+        n +
+        ',Please click here to <a href="http://localhost:4000/verifyEmail?id=' + id + '"> Verify <a/> Your Email.</p> '
+    }
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+
+      }
+      else {
+        console.log("Email has been send-", info.response)
+      }
+    })
+
+  };
+
+
+
+
+
+  static verifyEmail = async (req, res) => {
+    try {
+      const upadatInfo = await UserModel.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } })
+      // console.log(upadatInfo)
+      res.redirect('/dashboard')
+    } catch (error) {
+      console.log(error)
+
     }
   };
 
@@ -274,9 +367,21 @@ class FrontController {
                 url: uploadImage.secure_url,
               }
             })
-            await result.save()
-            req.flash('success', "Ragistration success please login")
-            res.redirect('/')
+            const userdata = await result.save()
+            if (userdata) {
+              let token = jwt.sign({ ID: userdata.id }, 'nikhilqwertyuisdfghjkzxcvbn')
+              //token genrate
+              // console.log(token)
+              res.cookie('token', token)
+              this.sendverifyEmail(n, e, userdata._id)
+
+              req.flash('success', "You are registered Successfully,Plaese verify your mail")
+              res.redirect('/ragistration')
+            }
+            else {
+              req.flash('error', 'Not register')
+              res.redirect('/ragistration')
+            }
 
           } else {
             req.flash('error', "Password and confirm pasword does not match")
@@ -294,6 +399,7 @@ class FrontController {
     }
   }
 
+
   // secure data login
 
   static vlogin = async (req, res) => {
@@ -305,18 +411,21 @@ class FrontController {
         if (user != null) {
           const isMatched = await bcrypt.compare(p, user.password)
           if (isMatched) {
-            if (user.role == "admin") {
-              let token = jwt.sign({ ID: user.id }, 'nikhilqwertyuisdfghjkzxcvbn')
+            if (user.role === "admin" && user.is_varified == 1) {
+              const token = jwt.sign({ ID: user.id }, 'nikhilqwertyuisdfghjkzxcvbn')
               //token genrate
               // console.log(token)
-              res.cookie('token', token)
+              res.cookie("token", token)
               res.redirect('/admin/dashboard')
-            } else {
+            } else if (user.role === "user" && user.is_varified == 1) {
               let token = jwt.sign({ ID: user.id }, 'nikhilqwertyuisdfghjkzxcvbn')
               //token genrate
               // console.log(token)
               res.cookie('token', token)
               res.redirect('/dashboard')
+            } else {
+              req.flash('erorr', 'plz varify your Email ')
+              res.redirect('/')
             }
 
 

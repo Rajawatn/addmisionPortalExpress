@@ -25,6 +25,8 @@ route.get('/forget', FrontController.forgotPassword)
 route.post('/forgot_Password', FrontController.forgetPasswordVerify)
 route.get('/reset_password', FrontController.reset_Password)
 route.post('/reset_Password1', FrontController.reset_Password1)
+//varify email
+route.get('/verifyEmail', FrontController.verifyEmail)
 //course controller
 route.post("/courseinsert", checkUserAuth, courseController.courseinsert);
 route.get("/course_display", checkUserAuth, courseController.courseDisplay);
