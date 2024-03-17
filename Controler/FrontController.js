@@ -155,48 +155,6 @@ class FrontController {
   };
 
 
-  // static sendverifyEmail = async (name, email, user_id) => {
-  //   // console.log(name,email,status,comment)
-  //   // connenct with the smtp server
-
-  //   let transporter = await nodemailer.createTransport({
-  //     host: "smtp.gmail.com",
-  //     port: 587,
-
-  //     auth: {
-  //       user: "rajawatnikhil0@gmail.com",
-  //       pass: "miiwzkejudgwbfui",
-  //     },
-  //   });
-  //   let info = await transporter.sendMail({
-  //     from: "test@gmail.com", // sender address
-  //     to: email, // list of receivers
-  //     subject: `for varification email`, // Subject line
-  //     text: "heelo", // plain text body
-  //     html:
-  //       "<p>Hii " +
-  //       name +
-  //       ',Please click here to <a href="http://localhost:4000/verify?id=' +
-  //       user_id +
-  //       '">verify</a>Your email.',// html body
-  //   });
-  // }
-
-  // static verifyMail = async (req, res) => {
-  //   try {
-  //     const updateinfo = await UserModel.findByIdAndUpdate(req.query.id, {
-  //       is_varified: 1,
-  //     })
-  //     if (updateinfo) {
-  //       res.redirect("/dashboard");
-  //     }
-  //   } catch (error) {
-
-  //   }
-  // }
-
-
-
   static sendverifyEmail = async (n, e, id) => {
     console.log(n, e, id)
     // connenct with the smtp server
@@ -211,7 +169,7 @@ class FrontController {
       },
     });
     const mailOptions = {
-      from: "rajawatnikhil0@gmail.com", // sender address
+      from: "test@gmail.com", // sender address
       to: e, // list of receivers
       subject: "Verify Email", // Subject line
       text: "heelo", // plain text body
