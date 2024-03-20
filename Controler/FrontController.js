@@ -165,7 +165,7 @@ class FrontController {
 
       auth: {
         user: "rajawatnikhil0@gmail.com",
-        pass: "ushxnskkerrwluhp",
+        pass: "miiwzkejudgwbfui",
       },
     });
     const mailOptions = {
