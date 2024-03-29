@@ -100,7 +100,7 @@ class FrontController {
   };
 
 
-  static sendEmail = async (name, email, token) => {
+  static sendEmail = async (n, e, token) => {
     let transporter = await nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -111,13 +111,13 @@ class FrontController {
       },
     });
     let info = await transporter.sendMail({
-      from: "test@gmail.com", // sender address
-      to: email, // list of receivers
+      from: "rajawatnikhil0@gmail.com", // sender address
+      to: e, // list of receivers
       subject: "Reset Password", // Subject line
       text: "heelo", // plain text body
       html:
         "<p>Hii " +
-        name +
+        n +
         ',Please click here to <a href="http://localhost:4000/reset_password?token=' +
         token +
         '">Reset</a>Your Password.',
@@ -155,41 +155,76 @@ class FrontController {
   };
 
 
-  static sendverifyEmail = async (n, e, id) => {
-    console.log(n, e, id)
-    // connenct with the smtp server
+  // static sendverifyEmail = async (n, e, id) => {
+  //   console.log(n, e, id)
+  //   // connenct with the smtp server
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
+  //   const transporter = nodemailer.createTransport({
+  //     host: "smtp.gmail.com",
+  //     port: 587,
 
-      auth: {
-        user: "rajawatnikhil0@gmail.com",
-        pass: "miiwzkejudgwbfui",
-      },
-    });
-    const mailOptions = {
-      from: "test@gmail.com", // sender address
-      to: e, // list of receivers
-      subject: "Verify Email", // Subject line
-      text: "heelo", // plain text body
-      html:
-        "<p>Hii " +
-        n +
-        ',Please click here to <a href="http://localhost:4000/verifyEmail?id=' + id + '"> Verify <a/> Your Email.</p> '
+  //     auth: {
+  //       user: "rajawatnikhil0@gmail.com",
+  //       pass: "miiwzkejudgwbfui",
+  //     },
+  //   });
+  //   const mailOptions = {
+  //     from: "test@gmail.com", // sender address
+  //     to: e, // list of receivers
+  //     subject: "Verify Email", // Subject line
+  //     text: "heelo", // plain text body
+  //     html:
+  //       "<p>Hii " +
+  //       n +
+  //       ',Please click here to <a href="http://localhost:4000/verifyEmail?id=' + id + '"> Verify <a/> Your Email.</p> '
+  //   }
+  //   transporter.sendMail(mailOptions, function (error, info) {
+  //     if (error) {
+  //       console.log(error);
+
+  //     }
+  //     else {
+  //       console.log("Email has been send-", info.response)
+  //     }
+  //   })
+
+  // };
+
+  static sendvarifyEmail = async (n, e, id) => {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+          user: "rajawatnikhil0@gmail.com",
+          pass: "miiwzkejudgwbfui",
+        },
+      });
+      const mailOptions = {
+        from: "rajawatnikhil0@gmail.com", // sender address
+        to: e, // list of receivers
+        subject: "for varification email ", // Subject line
+        text: "heelo", // plain text body
+        html:
+          "<p>Hii " +
+          n +
+          ',Please click here to <a href="http://localhost:4000/verify?id=' +
+          id +
+          '">verify</a>Your email.',
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('email has been sent:-', info.response)
+        }
+      })
+    } catch (error) {
+      console.log(error.message);
     }
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-
-      }
-      else {
-        console.log("Email has been send-", info.response)
-      }
-    })
-
   };
-
 
 
 
@@ -331,7 +366,7 @@ class FrontController {
               //token genrate
               // console.log(token)
               res.cookie('token', token)
-              this.sendverifyEmail(n, e, userdata._id)
+              this.sendvarifyEmail(n, e, userdata.id)
 
               req.flash('success', "You are registered Successfully,Plaese verify your mail")
               res.redirect('/ragistration')
@@ -375,7 +410,7 @@ class FrontController {
               // console.log(token)
               res.cookie("token", token)
               res.redirect('/admin/dashboard')
-            } else if (user.role === "user" && user.is_varified == 1) {
+            } else if (user.role === "user") {
               let token = jwt.sign({ ID: user.id }, 'nikhilqwertyuisdfghjkzxcvbn')
               //token genrate
               // console.log(token)
